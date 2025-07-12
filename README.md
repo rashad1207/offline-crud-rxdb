@@ -136,7 +136,7 @@ cd android
 
 ---
 
-## 📌 How to test offline functionality
+##  How to test offline functionality
 
 1. Open the app on Android emulator / device.
 2. Turn off WiFi / data.
@@ -146,12 +146,12 @@ cd android
 
 ---
 
-## 🙏 Thanks & Contact
+##  Thanks & Contact
 
 This was implemented as part of TitanDeploy’s technical assignment.  
 If any issues arise or you'd like a video walkthrough, please let me know.
 
 ---
 
-⭐ **GitHub repo:**  
+ **GitHub repo:**  
 https://github.com/rashad1207/offline-crud-rxdb
