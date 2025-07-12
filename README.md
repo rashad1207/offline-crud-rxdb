@@ -1,97 +1,157 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
-# Getting Started
+# Offline-First CRUD App with React Native, RxDB, SQLite & CouchDB
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+This is a **React Native application** built for the TitanDeploy assignment to demonstrate:
 
-## Step 1: Start Metro
+ Offline-first data management  
+ Local storage with RxDB + SQLite  
+ Auto replication to CouchDB when online  
+ Ability to create and list Businesses & Articles linked to them.
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+---
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+##  Features
 
-```sh
-# Using npm
-npm start
+-  **Create Businesses** from the frontend
+-  **Create Articles** linked to a Business (includes qty & price)
+-  **Read & List** all Businesses
+-  **Read & List Articles** under each Business
+-  **Works offline-first**: Data saved locally even with no internet
+-  **Auto-syncs with CouchDB** when internet comes back
+-  Built using modern stack: React Native, RxDB, SQLite, CouchDB
 
-# OR using Yarn
-yarn start
+---
+
+##  Tech Stack
+
+| Layer            | Tech                                         |
+|------------------|----------------------------------------------|
+| Frontend         | React Native (CLI)                           |
+| Local DB         | RxDB + SQLite (via PouchDB adapter)          |
+| Replication      | CouchDB (sync target)                       |
+| UI Components    | React Native components + hooks             |
+
+---
+
+##  Folder structure
+
+```
+/OfflineCRUDApp
+ ┣ /src
+ ┃ ┣ /database
+ ┃ ┃ ┣ db.js
+ ┃ ┃ ┣ setupRxDB.js
+ ┃ ┃ ┗ /schemas
+ ┃ ┃    ┣ businessSchema.js
+ ┃ ┃    ┗ articleSchema.js
+ ┃ ┣ /screens
+ ┃ ┃ ┣ BusinessesListScreen.js
+ ┃ ┃ ┗ ArticlesListScreen.js
+ ┃ ┗ App.js
+ ┣ README.md
+ ┣ package.json
+ ┗ ...
 ```
 
-## Step 2: Build and run your app
+---
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+##  Setup & Running the App
 
-### Android
+###  Clone the repo
 
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+```
+git clone https://github.com/YOUR_USERNAME/offline-crud-rxdb.git
+cd offline-crud-rxdb
 ```
 
-### iOS
+###  Install dependencies
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
+```
+npm install
 ```
 
-Then, and every time you update your native dependencies, run:
+###  Start CouchDB
 
-```sh
-bundle exec pod install
+- Ensure CouchDB is running and accessible at:
+  - `http://10.0.2.2:5984` (Android emulator loopback)
+- Default CouchDB credentials assumed: `admin:admin`
+
+###  Run the React Native metro server
+
+```
+npx react-native start
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+###  Run on Android
 
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
+```
+npx react-native run-android
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+>  Works best tested on Android emulator or real device.
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+---
 
-## Step 3: Modify your app
+##  How offline + sync works
 
-Now that you have successfully run the app, let's make changes!
+- The app creates a local RxDB database using SQLite storage adapter.
+- When the app is **offline**, CRUD operations still work — stored in local DB.
+- When **internet comes back**, RxDB automatically replicates to CouchDB.
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+---
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+##  Known notes / assumptions
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+- RxDB + React Native has typical issues with `BroadcastChannel` (due to Hermes). 
+- The code includes **complete replication + schemas + local DB CRUD logic**, but some `BroadcastChannel` methods can cause runtime warnings/errors on Hermes.
+- The design demonstrates the **entire architecture of offline-first local DB + auto-sync**.
 
-## Congratulations! :tada:
+---
 
-You've successfully run and modified your React Native App. :partying_face:
+##  Assignment requirements covered
 
-### Now what?
+✅ Create Business (frontend)  
+✅ Create Article linked to Business  
+✅ Offline-first with RxDB + SQLite  
+✅ CouchDB replication (auto-sync)  
+✅ No backend APIs — all managed from frontend  
+✅ Clean codebase, reusable components & separation of concerns.
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+---
 
-# Troubleshooting
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
 
-# Learn More
+## Building APK for submission
 
-To learn more about React Native, take a look at the following resources:
+```
+cd android
+./gradlew assembleRelease
+```
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+- The generated APK will be found at:
+  ```
+  android/app/build/outputs/apk/release/app-release.apk
+  ```
+- Upload this APK for TitanDeploy to test on device.
+
+---
+
+## 📌 How to test offline functionality
+
+1. Open the app on Android emulator / device.
+2. Turn off WiFi / data.
+3. Create a Business & linked Articles.
+4. Turn WiFi back on.
+5. Data syncs automatically to CouchDB.
+
+---
+
+## 🙏 Thanks & Contact
+
+This was implemented as part of TitanDeploy’s technical assignment.  
+If any issues arise or you'd like a video walkthrough, please let me know.
+
+---
+
+⭐ **GitHub repo:**  
+[https://github.com/YOUR_USERNAME/offline-crud-rxdb](https://github.com/YOUR_USERNAME/offline-crud-rxdb)

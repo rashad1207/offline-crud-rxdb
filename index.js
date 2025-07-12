@@ -1,6 +1,9 @@
 /**
  * @format
  */
+// import './src/setupRxDB';  // << must be first!
+
+import 'react-native-get-random-values';
 
 import { AppRegistry } from 'react-native';
 import App from './App';
