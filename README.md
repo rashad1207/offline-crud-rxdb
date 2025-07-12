@@ -154,4 +154,4 @@ If any issues arise or you'd like a video walkthrough, please let me know.
 ---
 
 ⭐ **GitHub repo:**  
-[https://github.com/YOUR_USERNAME/offline-crud-rxdb](https://github.com/YOUR_USERNAME/offline-crud-rxdb)
+https://github.com/rashad1207/offline-crud-rxdb
